@@ -1,0 +1,65 @@
+/* PLEASE REMOVE THE COMMENT BELOW TO CREATE anglophone and francophone tables. 
+ARIGATO.*/
+
+-- Init
+-- SELECT * INTO anglophone
+-- FROM brewery_data
+-- WHERE "COUNTRIES" IN ('Nigeria', 'Ghana');
+
+-- SELECT * INTO francophone
+-- FROM brewery_data
+-- WHERE "COUNTRIES" NOT IN ('Nigeria', 'Ghana');
+
+-- 1
+SELECT "BRANDS", "YEARS", SUM("PROFIT") AS "PROFITS"
+FROM brewery_data
+GROUP BY "BRANDS", "YEARS";
+
+-- 2
+SELECT SUM("PROFIT") AS "ANGLO",
+	(SELECT SUM("PROFIT") AS "FRANCO"
+	FROM francophone)
+FROM anglophone;
+
+-- 3
+SELECT "COUNTRIES", SUM("PROFIT") AS "PROFITS"
+FROM brewery_data
+WHERE "YEARS" = 2019
+GROUP BY "COUNTRIES"
+ORDER BY "PROFITS" DESC
+LIMIT 1;
+
+-- 4
+SELECT "YEARS", SUM("PROFIT") AS "PROFITS"
+FROM brewery_data
+GROUP BY "YEARS"
+ORDER BY "PROFITS" DESC
+LIMIT 1;
+
+-- 5
+SELECT "MONTHS", "YEARS", SUM("PROFIT") AS "PROFITS"
+FROM brewery_data
+GROUP BY "MONTHS", "YEARS"
+ORDER BY "PROFITS"
+LIMIT 1;
+
+-- 6
+SELECT MIN("PROFIT") AS "PROFIT"
+FROM brewery_data
+WHERE "MONTHS" = 'December'
+	AND "YEARS" = 2018
+LIMIT 1;
+
+-- 7
+SELECT "MONTHS", ROUND((SUM("PROFIT") / SUM("COST")) * 100.0, 2) AS "PERC_PROFIT"
+FROM brewery_data
+WHERE "YEARS" = 2019
+GROUP BY "MONTHS";
+
+-- 8
+SELECT "BRANDS", SUM("PROFIT") AS "PROFITS"
+FROM brewery_data
+WHERE "COUNTRIES" = 'Senegal'
+GROUP BY "BRANDS"
+ORDER BY "PROFITS"
+LIMIT 1;
